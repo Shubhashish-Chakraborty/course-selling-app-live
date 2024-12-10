@@ -3,10 +3,10 @@ const { z } = require('zod');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const { AdminModel } = require('../dbSchema');
+const { AdminModel , CourseModel } = require('../dbSchema');
 
+const { adminAuthentication } = require('../middlewares/adminauth');
 const adminRouter = Router();
-
 
 
 adminRouter.post('/signup' , async (req , res) => {
@@ -125,6 +125,9 @@ adminRouter.post('/signin' , async (req , res) => {
         })
     }
 })
+
+// Authenticated Endpoint!
+adminRouter.post('/create-course' , adminAuthentication , (req , res) => {})
 
 module.exports = {
     adminRouter: adminRouter

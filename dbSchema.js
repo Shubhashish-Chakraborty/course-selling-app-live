@@ -16,10 +16,20 @@ const userSchema = new Schema({
     password: String
 })
 
+const courseSchema = new Schema({
+    title: String,
+    description: String,
+    price: Number,
+    thumbnail: String,
+    adminId: ObjectId
+})
+
 const AdminModel = mongoose.model("admins" , adminSchema);
 const UserModel = mongoose.model("users" , userSchema);
+const CourseModel = mongoose.model("courses" , courseSchema);
 
 module.exports = {
     AdminModel: AdminModel,
-    UserModel: UserModel
+    UserModel: UserModel,
+    CourseModel: CourseModel
 }

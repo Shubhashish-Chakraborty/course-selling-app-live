@@ -127,7 +127,42 @@ adminRouter.post('/signin' , async (req , res) => {
 })
 
 // Authenticated Endpoint!
-adminRouter.post('/create-course' , adminAuthentication , (req , res) => {})
+adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
+    const requiredBody = z.object({
+        title: z.string().min(3).max(50),
+        description: z.string().min(3).max(100),
+        price: z.number(),
+        thumbnail: z.string()
+    });
+
+    // parse
+
+    const parsedDataWithSuccess = requiredBody.safeParse(req.body);
+
+    if (!parsedDataWithSuccess.success) {
+        res.status(400).json({
+            msg: "INVALID ADMINNAME OR PASSWORD",
+            error: parsedDataWithSuccess.error.issues
+        })
+        return
+    }
+
+    const {title , description , price , thumbnail} = req.body;
+
+    const course = await CourseModel.create({
+        title: title,
+        description: description,
+        price: price,
+        thumbnail: thumbnail,
+        adminId: req.adminId
+    })
+
+    res.json({
+        msg: "New Course Has been created!",
+        courseId: course._id,
+        courseTitle: title
+    })
+})
 
 module.exports = {
     adminRouter: adminRouter

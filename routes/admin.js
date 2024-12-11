@@ -226,6 +226,21 @@ adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
 
 })
 
+// Add the delete route and all if you want!!
+
+// Authenticated endpoint!
+adminRouter.get('/created-courses' , adminAuthentication , async (req , res) => {
+    const adminId = req.adminId;
+
+    const adminCourses = await CourseModel.find({
+        adminId: adminId
+    });
+
+    res.json(adminCourses);
+    
+
+})
+
 module.exports = {
     adminRouter: adminRouter
 }

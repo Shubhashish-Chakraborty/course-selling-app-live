@@ -24,12 +24,19 @@ const courseSchema = new Schema({
     adminId: ObjectId
 })
 
+const purchaseSchema = new Schema({
+    courseId: ObjectId,
+    userId: ObjectId
+})
+
 const AdminModel = mongoose.model("admins" , adminSchema);
 const UserModel = mongoose.model("users" , userSchema);
 const CourseModel = mongoose.model("courses" , courseSchema);
+const PurchaseModel = mongoose.model("purchases" , purchaseSchema);
 
 module.exports = {
     AdminModel: AdminModel,
     UserModel: UserModel,
-    CourseModel: CourseModel
+    CourseModel: CourseModel,
+    PurchaseModel: PurchaseModel
 }

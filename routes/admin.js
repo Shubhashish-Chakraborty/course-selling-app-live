@@ -141,7 +141,7 @@ adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
 
     if (!parsedDataWithSuccess.success) {
         res.status(400).json({
-            msg: "INVALID ADMINNAME OR PASSWORD",
+            msg: "INVALID INPUT",
             error: parsedDataWithSuccess.error.issues
         })
         return
@@ -162,6 +162,68 @@ adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
         courseId: course._id,
         courseTitle: title
     })
+})
+
+// Authenticated Endpoint!
+adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
+
+    const requiredBody = z.object({
+        title: z.string().min(3).max(50),
+        description: z.string().min(3).max(100),
+        price: z.number(),
+        thumbnail: z.string(),
+        courseId: z.string()
+    })
+
+    // parse
+
+    const parsedDataWithSuccess = requiredBody.safeParse(req.body);
+
+    if (!parsedDataWithSuccess.success) {
+        res.status(400).json({
+            msg: "INVALID INPUT",
+            error: parsedDataWithSuccess.error.issues
+        })
+        return
+    }
+
+    // UPTILL HERE input validation is done!
+
+
+
+    const adminId = req.adminId;
+    const { title , description , price , thumbnail , courseId } = req.body;
+
+    // FIRST OF ALL, EXPLICITILY CHECK THAT WHETHER THAT COURSE IS PRESENT FOR THAT PARTICULAR ADMIN OR NOT!
+
+    const course = await CourseModel.findOne({
+        _id: courseId,
+        adminId: adminId
+    })
+
+    if (!course) {
+        res.status(401).json({
+            msg: "No course Found!!!!"
+        })
+        return
+    }
+
+
+    await CourseModel.updateOne({
+        _id: courseId,
+        adminId: adminId
+    } , {
+        title: title,
+        description: description,
+        price: price,
+        thumbnail: thumbnail
+    })
+
+    res.json({
+        msg: "Your Course has been Successfully updated!",
+    })
+
+
 })
 
 module.exports = {

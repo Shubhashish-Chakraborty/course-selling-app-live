@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 
 const userRouter = Router();
 
-const { UserModel } = require('../dbSchema');
+const { UserModel, PurchaseModel } = require('../dbSchema');
+const { userAuthentication } = require('../middlewares/userauth');
 
 
 userRouter.post('/signup' , async (req , res) => {
@@ -123,6 +124,20 @@ userRouter.post('/signin' , async (req , res) => {
             token: token
         })
     }
+})
+
+// Authenticated Endpoint!
+userRouter.get('/purchases' , userAuthentication , async (req , res) => {
+    const userId = req.userId;
+
+    const purchases = await PurchaseModel.find({
+        userId: userId
+    })
+
+    res.json(purchases)
+
+    
+        
 })
 
 module.exports = {

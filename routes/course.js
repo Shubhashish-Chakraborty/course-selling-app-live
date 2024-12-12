@@ -25,7 +25,7 @@ courseRouter.post('/purchase' , userAuthentication , async (req , res) => {
 
     if (!courseExistance) {
         res.status(400).json({
-            msg: "NO COURSE AVAILABLE!!!"
+            message: "NO COURSE AVAILABLE!!!"
         })
         return
     }
@@ -38,7 +38,7 @@ courseRouter.post('/purchase' , userAuthentication , async (req , res) => {
 
     if (alreadyPurchased) {
         res.status(400).json({
-            msg: "This course has already been purhcased!!"
+            message: "This course has already been purhcased!!"
         })
         return
     }
@@ -49,7 +49,7 @@ courseRouter.post('/purchase' , userAuthentication , async (req , res) => {
     })
 
     res.json({
-        msg: "Course has been successfully purchased!"
+        message: "Course has been successfully purchased!"
     })
 
 })

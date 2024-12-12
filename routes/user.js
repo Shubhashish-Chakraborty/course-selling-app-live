@@ -28,7 +28,7 @@ userRouter.post('/signup' , async (req , res) => {
 
     if (!parsedDataWithSuccess.success) {
         res.status(400).json({
-            msg: "Invalid Format Data Given!",
+            message: "Invalid Format Data Given!",
             errors: parsedDataWithSuccess.error.issues
         })
         return
@@ -53,14 +53,14 @@ userRouter.post('/signup' , async (req , res) => {
     }
     catch(e) {
         res.status(400).json({
-            msg: `${username} Already Registered to our database!`
+            message: `${username} Already Registered to our database!`
         })
         errorFound = true;
     }
 
     if (!errorFound) {
         res.json({
-            msg: `${username} Successfully SignedUP to the database, as USER!`
+            message: `${username} Successfully SignedUP to the database, as USER!`
         })
     }
 })
@@ -81,7 +81,7 @@ userRouter.post('/signin' , async (req , res) => {
     
     if (!parsedDataWithSuccess.success) { 
         res.status(400).json({
-            msg: "INVALID USERNAME OR PASSWORD",
+            message: "INVALID USERNAME OR PASSWORD",
             error: parsedDataWithSuccess.error.issues
         })
         return
@@ -99,7 +99,7 @@ userRouter.post('/signin' , async (req , res) => {
 
     if (!user) {
         res.status(401).json({
-            msg: `${username} Doesn't exists in our database!`
+            message: `${username} Doesn't exists in our database!`
         })
         return
     }
@@ -110,7 +110,7 @@ userRouter.post('/signin' , async (req , res) => {
 
     if (!decryptedPassoword) {
         res.status(403).json({
-            msg: "User not Found, INCORRECT CREDENTIALS!!"
+            message: "User not Found, INCORRECT CREDENTIALS!!"
         })
     }
     else { // MAIN LOGIC: HERE ASSIGN THE JWT TO THE ADMIN
@@ -119,7 +119,7 @@ userRouter.post('/signin' , async (req , res) => {
         } , process.env.JWT_USER_SECRET);
 
         res.json({
-            msg: `${user.username} Successfully LoggedIN!!`,
+            message: `${user.username} Successfully LoggedIN!!`,
             email: user.email,
             token: token
         })

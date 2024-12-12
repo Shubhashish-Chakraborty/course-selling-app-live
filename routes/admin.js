@@ -28,7 +28,7 @@ adminRouter.post('/signup' , async (req , res) => {
 
     if (!parsedDataWithSuccess.success) {
         res.status(400).json({
-            msg: "Invalid Format Data Given!",
+            message: "Invalid Format Data Given!",
             errors: parsedDataWithSuccess.error.issues
         })
         return
@@ -53,14 +53,14 @@ adminRouter.post('/signup' , async (req , res) => {
     }
     catch(e) {
         res.status(400).json({
-            msg: `${adminname} Already Registered to our database!`
+            message: `${adminname} Already Registered to our database!`
         })
         errorFound = true;
     }
 
     if (!errorFound) {
         res.json({
-            msg: `${adminname} Successfully SignedUP to the database, as ADMIN!`
+            message: `${adminname} Successfully SignedUP to the database, as ADMIN!`
         })
     }
 })
@@ -81,7 +81,7 @@ adminRouter.post('/signin' , async (req , res) => {
     
     if (!parsedDataWithSuccess.success) { 
         res.status(400).json({
-            msg: "INVALID ADMINNAME OR PASSWORD",
+            message: "INVALID ADMINNAME OR PASSWORD",
             error: parsedDataWithSuccess.error.issues
         })
         return
@@ -99,7 +99,7 @@ adminRouter.post('/signin' , async (req , res) => {
 
     if (!admin) {
         res.status(401).json({
-            msg: `${adminname} Doesn't exists in our database!`
+            message: `${adminname} Doesn't exists in our database!`
         })
         return
     }
@@ -110,7 +110,7 @@ adminRouter.post('/signin' , async (req , res) => {
 
     if (!decryptedPassoword) {
         res.status(403).json({
-            msg: "Admin not Found, INCORRECT CREDENTIALS!!"
+            message: "Admin not Found, INCORRECT CREDENTIALS!!"
         })
     }
     else { // MAIN LOGIC: HERE ASSIGN THE JWT TO THE ADMIN
@@ -119,7 +119,7 @@ adminRouter.post('/signin' , async (req , res) => {
         } , process.env.JWT_ADMIN_SECRET);
 
         res.json({
-            msg: `${admin.adminname} Successfully LoggedIN!!`,
+            message: `${admin.adminname} Successfully LoggedIN!!`,
             email: admin.email,
             token: token
         })
@@ -141,7 +141,7 @@ adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
 
     if (!parsedDataWithSuccess.success) {
         res.status(400).json({
-            msg: "INVALID INPUT",
+            message: "INVALID INPUT",
             error: parsedDataWithSuccess.error.issues
         })
         return
@@ -158,7 +158,7 @@ adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
     })
 
     res.json({
-        msg: "New Course Has been created!",
+        message: "New Course Has been created!",
         courseId: course._id,
         courseTitle: title
     })
@@ -181,7 +181,7 @@ adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
 
     if (!parsedDataWithSuccess.success) {
         res.status(400).json({
-            msg: "INVALID INPUT",
+            message: "INVALID INPUT",
             error: parsedDataWithSuccess.error.issues
         })
         return
@@ -203,7 +203,7 @@ adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
 
     if (!course) {
         res.status(401).json({
-            msg: "No course Found!!!!"
+            message: "No course Found!!!!"
         })
         return
     }
@@ -220,7 +220,7 @@ adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
     })
 
     res.json({
-        msg: "Your Course has been Successfully updated!",
+        message: "Your Course has been Successfully updated!",
     })
 
 

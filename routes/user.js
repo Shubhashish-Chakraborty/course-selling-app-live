@@ -37,7 +37,7 @@ userRouter.post('/signup' , async (req , res) => {
     // Uptill here our INPUT VALIDATION is done 
     // NOW PROCESS WITH THE SIGNUP FOR THE ADMIN!!!!
 
-    const { fullname , username , email , password } = req.body;
+    const { fullname , username , email , password } = parsedDataWithSuccess.data;
 
     let errorFound = false;
     try {
@@ -89,7 +89,7 @@ userRouter.post('/signin' , async (req , res) => {
 
     // UPTILL HERE THE INPUT VALIDATION IS DONE!!!
 
-    const { username , password } = req.body;
+    const { username , password } = parsedDataWithSuccess.data;
 
     // now , check if the admin exists in our database or not!
     

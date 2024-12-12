@@ -37,7 +37,7 @@ adminRouter.post('/signup' , async (req , res) => {
     // Uptill here our INPUT VALIDATION is done 
     // NOW PROCESS WITH THE SIGNUP FOR THE ADMIN!!!!
 
-    const { fullname , adminname , email , password } = req.body;
+    const { fullname , adminname , email , password } = parsedDataWithSuccess.data;
 
     let errorFound = false;
     try {
@@ -89,7 +89,7 @@ adminRouter.post('/signin' , async (req , res) => {
 
     // UPTILL HERE THE INPUT VALIDATION IS DONE!!!
 
-    const { adminname , password } = req.body;
+    const { adminname , password } = parsedDataWithSuccess.data;
 
     // now , check if the admin exists in our database or not!
     
@@ -147,7 +147,7 @@ adminRouter.post('/create-course' , adminAuthentication , async (req , res) => {
         return
     }
 
-    const {title , description , price , thumbnail} = req.body;
+    const {title , description , price , thumbnail} = parsedDataWithSuccess.data;
 
     const course = await CourseModel.create({
         title: title,
@@ -192,7 +192,7 @@ adminRouter.put('/update-course' , adminAuthentication , async (req , res) => {
 
 
     const adminId = req.adminId;
-    const { title , description , price , thumbnail , courseId } = req.body;
+    const { title , description , price , thumbnail , courseId } = parsedDataWithSuccess.data;
 
     // FIRST OF ALL, EXPLICITILY CHECK THAT WHETHER THAT COURSE IS PRESENT FOR THAT PARTICULAR ADMIN OR NOT!
 
